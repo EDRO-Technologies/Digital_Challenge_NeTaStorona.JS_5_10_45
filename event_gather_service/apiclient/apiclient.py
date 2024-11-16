@@ -78,7 +78,7 @@ class ApiClient:
             response = await client.get(self.address + f"/events/search?sort=popularity&onlyWithActuralRegistration=1"
                                                        f"&cityId=1289709&onlyActual=1",
                                         headers=headers)
-            print(response.json())
+            # print(response.json())
             return response.json()
 
 

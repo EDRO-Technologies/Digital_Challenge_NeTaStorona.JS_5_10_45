@@ -1,12 +1,13 @@
 import os
+from dotenv import load_dotenv
 
 
 class Config(object):
     def __init__(self):
-        self.LEADER_ID_API = "https://apps.leader-id.ru/api/v1"
-        self.CLIENT_ID = "ccc2a1b4-0729-48ef-9b39-dbd480bac841"
-        self.CLIENT_SECRET = "k1JtDqYSt9cxWEMLcYuPDEoBeOHv7PaO"
-        # self.FRONTEND_URL = os.getenv("FRONTEND_URL")
+        load_dotenv()
+        self.LEADER_ID_API = os.getenv("LEADER_ID_API")
+        self.CLIENT_ID = os.getenv("CLIENT_ID")
+        self.CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
         for var in vars(self):
             if self.__getattribute__(var) is None:
