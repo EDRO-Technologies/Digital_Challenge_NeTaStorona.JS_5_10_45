@@ -63,6 +63,16 @@ const formData = reactive({
 const isFetching = ref(false);
 const isWannaBeAgent = ref(false);
 
+function redirectToSite(jwtToken: string) {
+  const baseUrl = import.meta.env.VITE_MAIN_FRONTEND_URL;
+
+  const params = new URLSearchParams({
+    token: jwtToken
+  });
+
+  window.location.href = `${baseUrl}?${params.toString()}`;
+}
+
 const onSubmit = async () => {
   const url = import.meta.env.VITE_AUTH_SERVER_URL + '/auth/register'
 
@@ -100,6 +110,9 @@ const onSubmit = async () => {
     ElNotification.success({
       message: 'Приятного пользования сервисом!',
     })
+
+    redirectToSite(data.token)
+
     console.log({data})
   } catch (error: any) {
     console.error(error)

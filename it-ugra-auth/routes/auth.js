@@ -28,15 +28,13 @@ router.post('/login', async (req, res, next) => {
         }
 
         user.password = undefined;
+        user.agent_request = undefined;
+
         const token = jwt.sign({user}, process.env.JWT_SECRET, {expiresIn: '40h'});
 
         res.json({
             token,
-            user: {
-                uuid: user.uuid,
-                username: user.fio,
-                email: user.email,
-            }
+            user
         });
     } catch (error) {
         console.error(error);
@@ -95,7 +93,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.get('/me', async (req, res) => {
+function getUserFromAuthHeader(req) {
     try {
         const test = req.header('Authorization');
 
@@ -104,10 +102,65 @@ router.get('/me', async (req, res) => {
         const me = jwt.decode(token);
 
         if (!me) {
+            return {};
+        }
+
+        return me.user;
+    } catch (error) {
+        return {};
+    }
+}
+
+router.get('/me', async (req, res) => {
+    try {
+        const me = getUserFromAuthHeader(req);
+
+        if (!me) {
             return res.status(403).send('Bad token');
         }
 
         return res.status(200).json(me)
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: true, msg: error})
+    }
+})
+
+router.get('/agent/requests', async (req, res) => {
+    try {
+        const {is_admin} = getUserFromAuthHeader(req);
+
+        if (!is_admin) {
+            return res.status(403).send('Вы не Администратор');
+        }
+
+        const {rows} = await db.query(`SELECT * FROM ${TABLE} WHERE agent_request is not null and is_agent = false`);
+
+        return res.status(200).json(rows.map(({fio, email, id, is_agent, agent_request}) => ({
+            fio, email, id, is_agent, agent_request
+        })))
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: true, msg: error})
+    }
+})
+
+router.post('/agent/requests/:id/approve', async (req, res) => {
+    try {
+        const {is_admin} = getUserFromAuthHeader(req);
+
+        if (!is_admin) {
+            return res.status(403).send('Вы не Администратор');
+        }
+
+        const { id } = req.params;
+
+        await db.query(
+            `UPDATE ${TABLE} SET agent_request = ($1), is_agent = ($2) WHERE id = ($3)`,
+             [null, true, +id]
+        );
+
+        return res.status(200).json({});
     } catch (error) {
         console.error(error);
         res.status(500).json({error: true, msg: error})

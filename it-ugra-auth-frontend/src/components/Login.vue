@@ -16,6 +16,17 @@
 import {reactive, ref} from 'vue'
 import {ElNotification} from 'element-plus'
 import axios from "axios";
+import router from "../router";
+
+function redirectToSite(jwtToken: string) {
+  const baseUrl = import.meta.env.VITE_MAIN_FRONTEND_URL;
+
+  const params = new URLSearchParams({
+    token: jwtToken
+  });
+
+  window.location.href = `${baseUrl}?${params.toString()}`;
+}
 
 const isFetching = ref(false);
 
@@ -23,6 +34,7 @@ const formData = reactive({
   email: '',
   password: '',
 })
+
 
 const onSubmit = async () => {
   const url = import.meta.env.VITE_AUTH_SERVER_URL + '/auth/login'
@@ -35,10 +47,17 @@ const onSubmit = async () => {
       password: formData.password,
     })
 
+    localStorage.setItem('token', data.token);
+
     ElNotification.success({
       message: 'Приятного пользования сервисом!',
     })
-    console.log({data})
+
+    if (data.user.is_admin) {
+      await router.push({path: '/agentreqs'})
+    } else {
+      redirectToSite(data.token)
+    }
   } catch (error) {
     console.error(error)
     ElNotification.error({
