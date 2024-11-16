@@ -1,8 +1,15 @@
 <template>
-  <div class="h-screen w-full max-w-4xl mx-auto p-4 pt-6 flex flex-col justify-between">
-    hello world!
-  </div>
+  <el-container class="gap-14">
+    <el-header>
+      <Header />
+    </el-header>
+    <el-main>
+      <router-view />
+    </el-main>
+    <el-footer></el-footer>
+  </el-container>
 </template>
 
 <script setup lang="ts">
+import Header from "@/views/components/Header.vue";
 </script>
