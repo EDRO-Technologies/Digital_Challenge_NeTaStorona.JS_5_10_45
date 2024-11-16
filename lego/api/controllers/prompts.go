@@ -64,8 +64,7 @@ func PostPrompt(ctx *fiber.Ctx) error {
 	}
 
 	return H.Success(ctx, fiber.Map{
-		"ok":       1,
-		"response": response,
+		"response": response.Choices[0].Message.Content,
 	})
 }
 

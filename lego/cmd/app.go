@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -44,8 +43,6 @@ func InitApp() *fiber.App {
 	app.Get("/swagger/doc.json", func(c *fiber.Ctx) error {
 		return c.SendFile("./docs/swagger.json")
 	})
-
-	fmt.Sprintf("%s")
 
 	app.Use(requestid.New())
 
