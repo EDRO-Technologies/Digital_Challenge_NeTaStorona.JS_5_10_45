@@ -29,5 +29,6 @@ class Event(BaseModel):
     date_end: datetime
     themes: List[Theme]
     type: Type
+    photo: str
     format: str
     space: Optional[Space]
