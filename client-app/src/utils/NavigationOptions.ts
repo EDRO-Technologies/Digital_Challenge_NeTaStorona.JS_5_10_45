@@ -11,4 +11,8 @@ export const navigationOptions = [
     name: "Другое",
     path: "/events",
   },
+  {
+    name: "На взлет",
+    path: "/survey",
+  },
 ];

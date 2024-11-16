@@ -14,7 +14,7 @@
     />
     <div class="flex flex-col gap-1 ml-2">
       <p class="font-bold text-xl">{{ props.title }}</p>
-      <p>
+      <p class="overflow-ellipsis">
         Lorem ipsum dolor sit amet. Est blanditiis excepturi sit velit
         praesentium ut voluptate quis ut obcaecati mollitia sit nobis sunt nam
         explicabo voluptatem. Qui labore voluptas non tempore quod est dolores
