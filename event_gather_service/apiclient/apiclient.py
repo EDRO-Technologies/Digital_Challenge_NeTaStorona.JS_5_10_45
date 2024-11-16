@@ -1,8 +1,15 @@
 import asyncio
 import functools
+from enum import Enum
 
 import httpx
 from config import Config
+
+
+class IdEnum(Enum):
+    SURGUT = 1289709
+    UGRA = 2341
+    IT_THEMES = 4842
 
 
 def auth_decorator(func):
@@ -68,7 +75,9 @@ class ApiClient:
     @auth_decorator
     async def get_events(self, headers: dict) -> dict:
         async with httpx.AsyncClient() as client:
-            response = await client.get(self.address + "/events", headers=headers)
+            response = await client.get(self.address + f"/events/search?sort=popularity&onlyWithActuralRegistration=1"
+                                                       f"&cityId=1289709&onlyActual=1",
+                                        headers=headers)
             print(response.json())
             return response.json()
 
