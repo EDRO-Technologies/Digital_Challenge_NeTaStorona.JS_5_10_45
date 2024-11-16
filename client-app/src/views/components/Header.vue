@@ -1,16 +1,13 @@
 <template>
   <div class="flex flex-col">
-    <div class="flex justify-between items-start">
+    <div class="flex justify-between items-start h-[8vh]">
       <div class="flex items-center gap-2">
         <el-avatar />
         <p class="font-bold text-xl">Цифровое пространство</p>
       </div>
 
       <div class="flex flex-col justify-end items-end gap-2 w-48">
-        <div class="flex flex-col items-center">
-          <el-avatar size="large" class="avatar" />
-          <p>Тест Тестович</p>
-        </div>
+        <el-avatar class="avatar" />
       </div>
     </div>
 
@@ -45,9 +42,8 @@ const handleNavigation = (selectedOption: string) => {
 
 <style scoped>
 .custom-style .el-segmented {
-  --el-segmented-item-selected-color: var(--el-text-color-primary);
-  --el-segmented-item-selected-bg-color: #00ffc4;
+  --el-segmented-item-selected-color: white;
   --el-segmented-bg-color: transparent;
-  --el-border-radius-base: 16px;
+  --el-border-radius-base: 8px;
 }
 </style>

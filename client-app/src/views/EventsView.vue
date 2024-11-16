@@ -1,75 +1,108 @@
 <template>
   <div class="flex items-center justify-center gap-2">
     <el-date-picker
-      v-model="dateRangeValue"
+      v-model="dateRangeFilter"
       type="daterange"
       range-separator="По"
       class="max-w-sm min-w-[36vw]"
     />
-    <el-select v-model="filterValue" placeholder="Выберите фильтр">
+    <el-select v-model="typeFilter" placeholder="Выберите фильтр" clearable>
       <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
+        v-for="eventType in AppEventTypesEnum"
+        :key="eventType"
+        :label="eventType"
+        :value="eventType"
       />
     </el-select>
     <el-input
-      v-model="searchValue"
+      v-model="nameSearchFilter"
       :prefix-icon="Search"
       placeholder="Поиск..."
     />
   </div>
-  <el-tabs v-model="eventType">
-    <el-tab-pane label="Хакатоны" name="hack">
-      <EventCard title="Мероприятие 1" description="" source="/Pattern.png" />
-      <EventCard title="SurGu Digital Challenge" description="" source="/Pattern2.png" />
-      <EventCard title="Еще мероприятие" description="" source="/Pattern3.png" />
-    </el-tab-pane>
-    <el-tab-pane label="Акселераторы" name="accelerator">
-      <el-empty description="Здесь будут отображаться мероприятия" />
-    </el-tab-pane>
-    <el-tab-pane label="Форумы" name="forum">
-      <el-empty description="Здесь будут отображаться мероприятия" />
-    </el-tab-pane>
-    <el-tab-pane label="Лекции" name="lecture" class="flex flex-col gap-2">
-      <el-empty description="Здесь будут отображаться мероприятия" />
-    </el-tab-pane>
-  </el-tabs>
+  <div class="flex flex-col gap-4 mt-5">
+    <el-empty v-if="filteredEvents.length == 0" />
+    <EventCard
+      v-else
+      v-for="event in paginatedEvents"
+      :key="event.id"
+      :event="event"
+    />
+  </div>
+
+  <el-pagination
+    v-model:current-page="currentPage"
+    :page-size="pageSize"
+    :total="totalEvents"
+    layout="prev, pager, next"
+    class="mt-5"
+  />
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, onBeforeMount, ref, watch } from "vue";
 import { Search } from "@element-plus/icons-vue";
 import EventCard from "@/views/components/EventCard.vue";
+import { getEvents } from "@/services/EventGatherService";
+import { ElNotification } from "element-plus";
+import { AppEventTypesEnum } from "@/utils/Constants";
+import { useEventStore } from "@/stores/EventStore";
 
-const eventType = ref("hack");
-const filterValue = ref("");
-const dateRangeValue = ref("");
-const searchValue = ref("");
+const eventStore = useEventStore();
 
-const options = [
-  {
-    value: "Option1",
-    label: "По дате создания",
-  },
-  {
-    value: "Option2",
-    label: "По актуальности",
-  },
-  {
-    value: "Option3",
-    label: "По другому параметру",
-  },
-  {
-    value: "Option4",
-    label: "Еще по другому параметру",
-  },
-  {
-    value: "Option5",
-    label: "Еще по другому другому параметру",
-  },
-];
+const typeFilter = ref("");
+const dateRangeFilter = ref("");
+const nameSearchFilter = ref("");
+
+const currentPage = ref(1);
+const pageSize = 3;
+
+
+const filteredEvents = computed(() => {
+  let filtered = eventStore.appEvents;
+
+  if (typeFilter.value != "" && typeFilter.value != null) {
+    filtered = eventStore.appEvents.filter(
+      (x) => x.type.name == typeFilter.value,
+    );
+  }
+
+  if (dateRangeFilter.value != "" && dateRangeFilter.value != null) {
+    filtered = eventStore.appEvents.filter(
+      (x) =>
+        x.date_start >= new Date(dateRangeFilter.value[0]) &&
+        x.date_end <= new Date(dateRangeFilter.value[1]),
+    );
+  }
+
+  if (nameSearchFilter.value != "") {
+    filtered = eventStore.appEvents.filter((x) =>
+      x.full_name.toLowerCase().includes(nameSearchFilter.value.toLowerCase()),
+    );
+  }
+
+  return filtered;
+});
+
+const totalEvents = computed(() => filteredEvents.value.length);
+
+const paginatedEvents = computed(() => {
+  const start = (currentPage.value - 1) * pageSize;
+  const end = start + pageSize;
+  return filteredEvents.value.slice(start, end);
+});
+
+onBeforeMount(async () => {
+  try {
+    eventStore.storeEvents(await getEvents());
+  } catch (error) {
+    ElNotification({
+      title: "Внимание!",
+      message: error.message,
+      type: "warning",
+    });
+  }
+});
 </script>
 
 <style scoped></style>

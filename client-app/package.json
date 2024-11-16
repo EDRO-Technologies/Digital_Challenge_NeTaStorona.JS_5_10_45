@@ -19,7 +19,9 @@
     "openai": "^4.24.1",
     "pdfjs-dist": "^4.7.76",
     "vue": "^3.3.11",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.4.5",
+    "pinia": "^2.2.4",
+    "pinia-plugin-store": "^2.2.8"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",

@@ -19,3 +19,16 @@
 * {
     padding: 1px;
 }
+
+:root {
+    /*background: rgb(0, 140, 163);*/
+    /*background: linear-gradient(137deg, rgba(0, 140, 163, 1) 0%, rgba(102, 191, 179, 1) 100%);*/
+
+    --el-color-primary: #008ca3 !important;
+    --el-color-primary-light-3: rgb(52 198 223) !important;
+    --el-color-primary-light-5: rgb(122 221 237) !important;
+    --el-color-primary-light-7: rgb(169 231 241) !important;
+    --el-color-primary-light-8: rgb(200 243 251) !important;
+    --el-color-primary-light-9: rgb(236 252 255) !important;
+    --el-color-primary-dark-2: rgb(0 69 81) !important;
+}
