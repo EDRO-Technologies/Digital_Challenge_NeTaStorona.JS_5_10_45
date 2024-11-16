@@ -53,11 +53,11 @@ router.post('/register', async (req, res) => {
 
     const {email, password, fio, birthdate} = req.body;
 
-    ['email', 'password', 'fio', 'birthdate'].forEach((value) => {
+    for (const value of ['email', 'password', 'fio', 'birthdate']) {
         if (!req.body[value]) {
-            return res.status(400).json({error: true, msg: `Не введено поле ${value}!`})
+            return res.status(400).json({error: true, msg: `Не введено поле ${value}!`});
         }
-    })
+    }
 
 
     try {
