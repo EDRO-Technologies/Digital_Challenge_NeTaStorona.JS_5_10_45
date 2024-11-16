@@ -18,12 +18,13 @@
           size="large"
           type="date"
           placeholder="Когда у Вас день рождения?"
+          format="DD.MM.YYYY"
           clearable
       />
     </el-form-item>
 
     <el-form-item>
-      <el-button size="large" class="w-full mb-0" type="primary" @click="onSubmit">Зарегистрироваться</el-button>
+      <el-button size="large" class="w-full mb-0 mt-6" type="primary" @click="onSubmit">Зарегистрироваться</el-button>
     </el-form-item>
   </el-form>
 </template>

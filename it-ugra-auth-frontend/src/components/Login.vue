@@ -7,7 +7,7 @@
       <el-input type="password" size="large" v-model="formData.password" placeholder="Введите пароль" clearable/>
     </el-form-item>
     <el-form-item>
-      <el-button size="large" class="w-full mb-0" type="primary" @click="onSubmit">Войти</el-button>
+      <el-button size="large" class="w-full mb-0 mt-6" type="primary" @click="onSubmit">Войти</el-button>
     </el-form-item>
   </el-form>
 </template>
