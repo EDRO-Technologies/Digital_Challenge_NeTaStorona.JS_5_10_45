@@ -11,7 +11,6 @@
           <el-avatar size="large" class="avatar" />
           <p>Тест Тестович</p>
         </div>
-        <!--        <el-input :prefix-icon="Search" />-->
       </div>
     </div>
 
@@ -27,7 +26,6 @@
 </template>
 
 <script setup lang="ts">
-import { Search } from "@element-plus/icons-vue";
 import { ref } from "vue";
 import { navigationOptions } from "@/utils/NavigationOptions";
 import { useRouter } from "vue-router";
@@ -49,6 +47,7 @@ const handleNavigation = (selectedOption: string) => {
 .custom-style .el-segmented {
   --el-segmented-item-selected-color: var(--el-text-color-primary);
   --el-segmented-item-selected-bg-color: #00ffc4;
+  --el-segmented-bg-color: transparent;
   --el-border-radius-base: 16px;
 }
 </style>

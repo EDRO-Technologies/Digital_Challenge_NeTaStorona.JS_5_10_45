@@ -7,4 +7,8 @@ export const navigationOptions = [
     name: "Поддержка",
     path: "/support",
   },
+  {
+    name: "Другое",
+    path: "/events",
+  },
 ];

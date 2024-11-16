@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-8">
+  <div class="flex flex-col gap-2">
     <el-card v-for="(option, index) in paginatedLinks" :key="index">
       <header class="font-bold text-xl">{{ option.title }}</header>
       <section class="whitespace-pre-wrap">{{ option.description }}</section>

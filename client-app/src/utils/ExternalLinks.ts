@@ -1,6 +1,6 @@
 import type { ISupportLink } from "@/stores/models/SupportLink";
 
-export const governmentSupportExternalLinks: ISupportLink[] = [
+export const federalSupportExternalLinks: ISupportLink[] = [
   {
     title: "Налоговые льготы",
     description:
