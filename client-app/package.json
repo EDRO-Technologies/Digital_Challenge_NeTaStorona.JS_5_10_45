@@ -15,13 +15,13 @@
     "@vueuse/core": "^10.7.1",
     "axios": "^1.7.7",
     "element-plus": "^2.8.7",
-    "marked": "^14.1.3",
+    "marked": "^14.1.4",
     "openai": "^4.24.1",
     "pdfjs-dist": "^4.7.76",
-    "vue": "^3.3.11",
-    "vue-router": "^4.4.5",
     "pinia": "^2.2.4",
-    "pinia-plugin-store": "^2.2.8"
+    "pinia-plugin-store": "^2.2.8",
+    "vue": "^3.3.11",
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",

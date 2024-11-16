@@ -4,13 +4,11 @@ import { LlmSendRequestService } from "@/utils/ServiceAddresses";
 
 export const sendLlmRequest = async (
   request: ILegoRequest,
-): Promise<ILegoResonse> => {
+): Promise<string> => {
+  console.log(request);
   try {
-    const { data } = await axios.post<ILegoResonse>(
-      LlmSendRequestService,
-      request,
-    );
-    return data;
+    const response = await axios.post<string>(LlmSendRequestService, request);
+    return response.data.response;
   } catch (e) {
     throw e;
   }

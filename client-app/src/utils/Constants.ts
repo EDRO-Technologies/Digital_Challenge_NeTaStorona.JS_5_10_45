@@ -20,3 +20,5 @@ export enum AppEventTypesEnum {
   PITCH = "Питч",
   HACKATHON = "Хакатон",
 }
+
+
