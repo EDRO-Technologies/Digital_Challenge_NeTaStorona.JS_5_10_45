@@ -6,9 +6,15 @@ import 'element-plus/dist/index.css'
 
 import ruRU from 'element-plus/es/locale/lang/ru'
 
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+
 const app = createApp(App)
 
 app.use(ElementPlus, {
   locale: ruRU
 })
+
+app.component('QuillEditor', QuillEditor);
+
 app.mount('#app')

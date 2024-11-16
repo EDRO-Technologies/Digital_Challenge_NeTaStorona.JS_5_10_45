@@ -51,14 +51,13 @@ router.post('/register', async (req, res) => {
         return;
     }
 
-    const {email, password, fio, birthdate} = req.body;
+    const {email, password, fio, birthdate, agentRequest} = req.body;
 
     for (const value of ['email', 'password', 'fio', 'birthdate']) {
         if (!req.body[value]) {
             return res.status(400).json({error: true, msg: `Не введено поле ${value}!`});
         }
     }
-
 
     try {
         // Хеширование пароля
@@ -76,7 +75,15 @@ router.post('/register', async (req, res) => {
             [email, hashedPassword, fio, birthdate]
         );
 
+
         const {password: _, ...user} = result.rows[0];
+
+        if (agentRequest) {
+            await db.query(
+                `UPDATE ${TABLE} SET agent_request = ($1) WHERE id = ($2)`,
+                [agentRequest, user.id]
+            );
+        }
 
         // Генерация JWT токена
         const token = jwt.sign({user}, process.env.JWT_SECRET, {expiresIn: '40h'});
