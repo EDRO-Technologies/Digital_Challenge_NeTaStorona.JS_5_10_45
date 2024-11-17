@@ -3,7 +3,11 @@
     v-loading.fullscreen.lock="isLoading"
     class="quiz flex flex-col h-[80vh] mx-auto"
   >
-    <el-input v-model="requestMessage" placeholder="Введите ваш запрос" />
+    <el-input
+      v-model="requestMessage"
+      placeholder="Введите ваш запрос"
+      class="mb-4"
+    />
     <div
       class="pagination flex justify-between items-center p-4 border-b border-gray-300 bg-gray-50"
     >
