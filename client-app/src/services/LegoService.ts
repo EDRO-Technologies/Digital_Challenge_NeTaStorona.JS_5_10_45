@@ -7,7 +7,7 @@ export const sendLlmRequest = async (
 ): Promise<string> => {
   console.log(request);
   try {
-    const response = await axios.post<string>(LlmSendRequestService, request);
+    const response = await axios.post<any>(LlmSendRequestService, request);
     return response.data.response;
   } catch (e) {
     throw e;

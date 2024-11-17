@@ -1,5 +1,8 @@
 <template>
-  <div class="flex items-center justify-center gap-2">
+  <div
+    v-loading.fullscreen.lock="isLoading"
+    class="flex items-center justify-center gap-2"
+  >
     <el-date-picker
       v-model="dateRangeFilter"
       type="daterange"
@@ -49,6 +52,7 @@ import { AppEventTypesEnum } from "@/utils/Constants";
 import { useEventStore } from "@/stores/EventStore";
 
 const eventStore = useEventStore();
+const isLoading = ref(false);
 
 const typeFilter = ref("");
 const dateRangeFilter = ref("");
@@ -56,7 +60,6 @@ const nameSearchFilter = ref("");
 
 const currentPage = ref(1);
 const pageSize = 3;
-
 
 const filteredEvents = computed(() => {
   let filtered = eventStore.appEvents;
@@ -94,13 +97,16 @@ const paginatedEvents = computed(() => {
 
 onBeforeMount(async () => {
   try {
+    isLoading.value = true;
     eventStore.storeEvents(await getEvents());
+    isLoading.value = false;
   } catch (error) {
     ElNotification({
       title: "Внимание!",
-      message: error.message,
+      message: "Ошибка получения событий",
       type: "warning",
     });
+    isLoading.value = false;
   }
 });
 </script>

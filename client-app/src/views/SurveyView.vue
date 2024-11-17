@@ -66,7 +66,7 @@ export default {
     return {
       questions: surveyQuestions,
       currentPage: 0,
-      selectedAnswers: {},
+      selectedAnswers: {} as Record<number, string[]>,
       requestMessage: "",
       answer: "",
       isLoading: false,
@@ -87,11 +87,12 @@ export default {
       );
     },
     toggleAnswer(answerIndex: number) {
-      const selected = this.selectedAnswers[this.currentPage] || [];
+      const selected =
+        this.selectedAnswers[this.currentPage] || ([] as string[]);
       const data = `${this.currentQuestion.question}: ${this.currentQuestion.answers[answerIndex]}`;
       if (selected.includes(data)) {
         this.selectedAnswers[this.currentPage] = selected.filter(
-          (item) => item !== data,
+          (item: any) => item !== data,
         );
       } else {
         this.selectedAnswers[this.currentPage] = [...selected, data];
