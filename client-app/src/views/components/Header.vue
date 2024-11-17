@@ -3,16 +3,20 @@
     <div class="flex justify-between items-start h-[8vh]">
       <div class="flex items-center gap-2">
         <el-avatar />
-        <p class="font-bold text-xl">Цифровое пространство</p>
+        <p class="font-bold text-xl">IT-Югра</p>
       </div>
 
-      <div class="flex flex-col justify-end items-end gap-2 w-48">
-        <el-avatar class="avatar" />
-      </div>
+      <el-avatar
+        v-if="!isProfilePage"
+        class="flex flex-col justify-end items-end gap-2 w-48 hover:cursor-pointer"
+        :icon="UserFilled"
+        @click="openProfile"
+      />
     </div>
 
     <div class="custom-style">
       <el-segmented
+        v-if="!isProfilePage"
         v-model="currentPage"
         :options="navigationOptions.map((option) => option.name)"
         @change="handleNavigation"
@@ -23,11 +27,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { navigationOptions } from "@/utils/NavigationOptions";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { UserFilled } from "@element-plus/icons-vue";
 
 const router = useRouter();
+const route = useRoute();
+const isProfilePage = computed(() => route.path === "/profile");
 const currentPage = ref(navigationOptions[0].name);
 
 const handleNavigation = (selectedOption: string) => {
@@ -38,6 +45,8 @@ const handleNavigation = (selectedOption: string) => {
     router.push(route);
   }
 };
+
+const openProfile = () => router.push("/profile");
 </script>
 
 <style scoped>

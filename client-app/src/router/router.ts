@@ -3,6 +3,7 @@ import App from "@/App.vue";
 import SupportView from "@/views/SupportView.vue";
 import EventsView from "@/views/EventsView.vue";
 import SurveyView from "@/views/SurveyView.vue";
+import ProfileView from "@/views/ProfileView.vue";
 
 const routes = [
   {
@@ -21,6 +22,10 @@ const routes = [
     path: "/survey",
     component: SurveyView,
   },
+  {
+    path: "/profile",
+    component: ProfileView,
+  }
 ];
 
 const Router = createRouter({
