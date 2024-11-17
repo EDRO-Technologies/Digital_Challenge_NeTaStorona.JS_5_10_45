@@ -93,6 +93,6 @@ func DocumentPrompt(ctx *fiber.Ctx) error {
 	}
 
 	return H.Success(ctx, fiber.Map{
-		"response": response,
+		"response": response.Choices[0].Message.Content,
 	})
 }
