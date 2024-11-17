@@ -4,11 +4,16 @@ import SupportView from "@/views/SupportView.vue";
 import EventsView from "@/views/EventsView.vue";
 import SurveyView from "@/views/SurveyView.vue";
 import ProfileView from "@/views/ProfileView.vue";
+import Auther from "@/views/Auther.vue";
 
 const routes = [
   {
     path: "/",
-    component: App,
+    redirect: '/events',
+  },
+  {
+    path: "/auth",
+    component: Auther,
   },
   {
     path: "/support",

@@ -50,6 +50,7 @@ import { getEvents } from "@/services/EventGatherService";
 import { ElNotification } from "element-plus";
 import { AppEventTypesEnum } from "@/utils/Constants";
 import { useEventStore } from "@/stores/EventStore";
+import { getUser } from "@/services/userService";
 
 const eventStore = useEventStore();
 const isLoading = ref(false);
@@ -96,6 +97,10 @@ const paginatedEvents = computed(() => {
 });
 
 onBeforeMount(async () => {
+  const data = await getUser();
+
+  console.log({data});
+
   try {
     isLoading.value = true;
     eventStore.storeEvents(await getEvents());
