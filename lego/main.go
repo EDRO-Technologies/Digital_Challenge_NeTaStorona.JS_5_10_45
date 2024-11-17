@@ -15,10 +15,6 @@ func main() {
 
 	confVars, configErr := config.New()
 
-	//examples := db.Init_db()
-	//
-	//_ = examples
-
 	if configErr != nil {
 		log.Fatal(configErr)
 	}

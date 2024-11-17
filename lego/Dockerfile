@@ -9,12 +9,15 @@ COPY . .
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o lego-server .
 
-FROM scratch
+FROM alpine:latest
 
 WORKDIR /app
+
+RUN apk add ca-certificates
 
 COPY --from=builder ./app/lego-server .
 
 COPY --from=builder ./app/.env ./.env
 
-CMD ["./worm-server"]
+
+CMD ["./lego-server"]
