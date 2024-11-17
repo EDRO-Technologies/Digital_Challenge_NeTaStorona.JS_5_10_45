@@ -6,6 +6,11 @@ type UserRequest struct {
 	Context string `json:"context"`
 }
 
+type UserRequestImage struct {
+	UserID   int    `json:"user_id"`
+	ImageUrl string `json:"image_url"`
+}
+
 type ModelRequest struct {
 	Model       string  `json:"model"`
 	Temperature float64 `json:"temperature"`
@@ -57,4 +62,29 @@ type ModelResponse struct {
 		} `json:"message"`
 		FinishReason string `json:"finish_reason"`
 	} `json:"choices"`
+}
+
+type ModelRequestImage struct {
+	Model       string  `json:"model"`
+	Temperature float64 `json:"temperature"`
+	TopP        float64 `json:"top_p"`
+	MaxTokens   int     `json:"max_tokens"`
+	Stream      bool    `json:"stream"`
+	Stop        string  `json:"stop"`
+	Messages    []struct {
+		Role    string `json:"role"`
+		Content []struct {
+			Type     string `json:"type"`
+			Text     string `json:"text,omitempty"`
+			ImageUrl string `json:"image_url,omitempty"`
+		} `json:"content"`
+	} `json:"messages"`
+	ResponseFormat struct {
+		Type string `json:"type"`
+	} `json:"response_format"`
+	ToolChoice       string `json:"tool_choice"`
+	PresencePenalty  int    `json:"presence_penalty"`
+	FrequencyPenalty int    `json:"frequency_penalty"`
+	N                int    `json:"n"`
+	SafePrompt       bool   `json:"safe_prompt"`
 }

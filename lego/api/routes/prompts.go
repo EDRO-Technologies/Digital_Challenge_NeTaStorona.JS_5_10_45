@@ -9,4 +9,6 @@ import (
 
 func SetupProductsRoutes(router fiber.Router) {
 	router.Post("/prompt", mw.RateLimit(C.Tier7, 0), controllers.PostPrompt)
+
+	router.Post("/documentPrompt", mw.RateLimit(C.Tier7, 0), controllers.DocumentPrompt)
 }
